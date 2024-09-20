@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container shadow-lg mt-5">
+        <h1 class="mb-3 main-heading" >Temperature Converter</h1>
+        <label for="temp" class="mb-1 mt-3">Enter Temperature:</label>
+        <input type="number" id="temp" placeholder="Enter temperature">
+
+        <label for="fromUnit" class="mb-1 mt-3">Convert from:</label>
+        <select id="fromUnit">
+            <option value="Celsius">Celsius</option>
+            <option value="Fahrenheit">Fahrenheit</option>
+            <option value="Kelvin">Kelvin</option>
+        </select>
+
+        <label for="toUnit" class="mb-1 mt-3">Convert to:</label>
+        <select id="toUnit">
+            <option value="Celsius">Celsius</option>
+            <option value="Fahrenheit">Fahrenheit</option>
+            <option value="Kelvin">Kelvin</option>
+        </select>
+
+        <button onclick="convertTemperature()" class="mb-2 mt-3">Convert</button>
+
+        <h3 id="result" class="mb-1 mt-3"></h3>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            var temp = parseFloat(document.getElementById("temp").value);
+            var fromUnit = document.getElementById("fromUnit").value;
+            var toUnit = document.getElementById("toUnit").value;
+            var result;
+
+            if (isNaN(temp)) {
+                document.getElementById("result").innerHTML = "Please enter a valid number!";
+                return;
+            }
+
+            if (fromUnit === toUnit) {
+                result = temp;
+            } else {
+                if (fromUnit === "Celsius") {
+                    if (toUnit === "Fahrenheit") {
+                        result = (temp * 9 / 5) + 32;
+                    } else if (toUnit === "Kelvin") {
+                        result = temp + 273.15;
+                    }
+                } else if (fromUnit === "Fahrenheit") {
+                    if (toUnit === "Celsius") {
+                        result = (temp - 32) * 5 / 9;
+                    } else if (toUnit === "Kelvin") {
+                        result = (temp - 32) * 5 / 9 + 273.15;
+                    }
+                } else if (fromUnit === "Kelvin") {
+                    if (toUnit === "Celsius") {
+                        result = temp - 273.15;
+                    } else if (toUnit === "Fahrenheit") {
+                        result = (temp - 273.15) * 9 / 5 + 32;
+                    }
+                }
+            }
+
+            document.getElementById("result").innerHTML = `Result: ${result.toFixed(2)} ${toUnit}`;
+        }
+    </script>
+</body>
+
+</html>
